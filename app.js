@@ -491,8 +491,8 @@
     }
     document.getElementById('shell-top').innerHTML = '<div class="top"><p class="eyebrow">' + esc(eyebrowTxt()) + '</p>' + settings + '</div>';
     document.getElementById('shell-hero').innerHTML = '<header class="hero"><h1><span class="cap">' + esc(title.charAt(0)) + '</span>' + esc(title.slice(1)) + '</h1>' +
-      '<p class="lede">' + esc(t('lede')) + '</p>' + peekLinkHtml() + '</header>';
-    document.getElementById('shell-rest').innerHTML = '<div class="hero hero-tail">' + stopgapHtml() + '<p class="fleuron" aria-hidden="true">❦</p></div>' +
+      '<p class="lede">' + esc(t('lede')) + '</p></header>';
+    document.getElementById('shell-rest').innerHTML = '<div class="hero hero-tail">' + stopgapHtml() + peekLinkHtml() + '<p class="fleuron" aria-hidden="true">❦</p></div>' +
       tabs + '<main class="panel" id="panel"></main><div id="savebar"></div><p class="sr" aria-live="polite" id="live"></p>' +
       '<footer class="site-foot">' + ghFootHtml() + '</footer>';
     document.getElementById('shell-over').innerHTML = cvBannerHtml() + ghDialogHtml();
