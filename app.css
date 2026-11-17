@@ -428,8 +428,10 @@ table.idx tr.is-hidden td { opacity: .55; }
 .hero-tail { margin-top: 0; }
 .meme { margin: 22px auto 0; max-width: 550px; display: flex; justify-content: center; }
 .meme .twitter-tweet { margin: 0 !important; }
-.meme blockquote.twitter-tweet { font-family: var(--sc); font-size: 13px; letter-spacing: .08em; padding: 10px 14px; border: 1px solid var(--rule); border-radius: 6px; background: color-mix(in srgb, var(--page) 80%, transparent); }
-.meme blockquote.twitter-tweet a { color: var(--ink); }
+.meme blockquote.twitter-tweet { width: min(100%, 550px); padding: 14px 18px; border: 1px solid var(--rule); border-radius: 12px; background: color-mix(in srgb, var(--page) 88%, transparent); color: var(--ink); text-align: left; }
+.meme blockquote.twitter-tweet p { margin: 0 0 8px; font-family: var(--body); font-size: 1.15rem; line-height: 1.4; overflow-wrap: anywhere; }
+.meme .meme-by { font-family: var(--sc); font-size: 13px; letter-spacing: .05em; color: var(--muted); }
+.meme blockquote.twitter-tweet a { font-family: var(--sc); font-size: 13px; letter-spacing: .05em; color: var(--ink); }
 .site-foot { margin-top: 30px; text-align: center; }
 .site-foot:empty { display: none; }
 .link-btn { background: none; border: 0; padding: 4px 8px; font-family: var(--sc); font-weight: 600; font-size: 12px; letter-spacing: .1em; color: var(--muted); opacity: .65; cursor: pointer; }
