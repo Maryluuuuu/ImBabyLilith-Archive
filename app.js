@@ -14,7 +14,9 @@
     d.autoras = Array.isArray(d.autoras) ? d.autoras : [];
     d.pendientes = Array.isArray(d.pendientes) ? d.pendientes : [];
     d.meta = d.meta || {};
-    if (d.adelanto && typeof d.adelanto !== 'object') delete d.adelanto;
+    if (d.adelanto) migrateAdelanto(d);
+    if (!Array.isArray(d.cartas)) d.cartas = [];
+    d.cartas.forEach(function (c) { if (c.tipo === 'capitulo' && !Array.isArray(c.frags)) c.frags = []; });
     return d;
   }
 
@@ -34,7 +36,7 @@
       authors_h: 'Autoras que sigo', authors_sub: 'Si te gustó uno de sus folios, lo demás que escriben vale la pena.', fics_n: '{n} fics',
       fol: 'Fol.', by: 'por', m_fandom: 'Fandom', m_ship: 'Ship', m_len: 'Largo', m_status: 'Estado', cap: 'cap.', caps: 'caps.',
       about: 'De qué trata', why: 'Por qué lo recomiendan', why_by: 'Por qué lo recomienda @{u}', note: 'Nota de la archivista', rec_by: 'Rec de @{u}', inscribed: 'Inscrito el {d}',
-      copyx: 'Copiar para X', read_ao3: 'Leer en AO3', wb: 'Buscar en Wayback', ats: 'Buscar en archive.today', nav_peek: 'Adelanto', pk_kicker: 'Adelanto', pk_teaser: 'Lee un adelanto de {f}', pk_cap_card: 'Capítulo', pk_prof_card: 'Perfil', pk_read: 'Romper el sello', pk_again: 'Volver a leer', pk_seeprof: 'Ver perfil', pk_back: 'Volver al adelanto', pk_draft_short: 'Borrador', ad_prof_h: 'Perfil (segunda tarjeta)', ad_pnom: 'Nombre', ad_ptit: 'Título', ad_pdat: 'Datos: uno por línea, “Clave: valor”', ad_ptxt: 'Texto del perfil', pk_hello: 'Happy reading! We survived the AO3 shutdown… mostly sane', pk_in_en: 'escrito en inglés', pk_in_es: 'escrito en español', pk_draft: 'Borrador: puede cambiar antes de publicarse', pk_more: 'To be continued…', pk_note_by: 'Nota de la autora', pk_prev: 'Lee los capítulos anteriores', pk_x: 'Si quieres platicar de la historia, ando por X:', pk_hidden: 'Solo tú ves esta página: el adelanto está oculto. Revísalo y muéstralo a la comunidad desde Escriba.', pk_hidden_p: 'El perfil está oculto: solo tú lo ves. La comunidad solo ve el capítulo.', pk_hidden_c: 'El capítulo está oculto: solo tú lo ves. La comunidad solo ve el perfil.', pk_hidden_one: 'Solo tú ves esto: está oculto para la comunidad.', pk_edit: 'Editar en Escriba', ad_h: 'Adelanto de tu fic', ad_sub_off: 'Oculto: solo tú lo ves. Revisa el texto, aplica tus cambios y, cuando esté listo, muéstralo a la comunidad y guarda.', ad_sub_on: 'Visible para todos en la pestaña Adelanto.', ad_fic: 'Fic', ad_cap: 'Capítulo', ad_link: 'Link a tu fic en AO3 (opcional)', ad_lang: 'Idioma del texto', ad_draft: 'Mostrar la etiqueta de borrador', ad_note: 'Nota para quienes lean (opcional)', ad_text: 'Texto del adelanto', ad_help: 'Cada línea es un párrafo. *cursiva*, **negrita** y --- en su propia línea para una línea horizontal.', ad_apply: 'Aplicar cambios', ad_view: 'Ver cómo se ve', ad_show: 'Mostrar el capítulo', ad_hide: 'Ocultar el capítulo', ad_pshow: 'Mostrar el perfil', ad_phide: 'Ocultar el perfil', ad_vis: 'visible para todos', ad_hid: 'oculto', ad_state: 'Capítulo: {c} · Perfil: {p}.', m_ad: 'Adelanto actualizado. Falta guardar.', fh: 'Descargar el fic completo con FicHub (EPUB funciona mejor)', read_in: 'Leer en', ao3_down_h: 'Un archivo por mientras', ao3_down: 'AO3 está caído desde el 29 de octubre por un incidente de seguridad. Este archivo es de todes: mientras vuelve, aquí juntamos nuestras recs, y cada folio trae botones para leer: “FicHub” descarga el fic completo (EPUB es lo que mejor funciona; está muy cargado, ten paciencia), y “Wayback” o “archive.today” buscan una copia guardada, aunque no todos los fics tienen copia y archive.today a veces pide resolver un captcha.', follow_line: 'Lo cuido yo, @{u}; sígueme en X para novedades.', eta_h: 'Regreso estimado de AO3', eta_range: 'Entre el {a} y el {b}', eta_until: 'Faltan aprox. {d} para la fecha más temprana.', eta_window: 'Ya estamos en el rango: puede volver en cualquier momento. A más tardar en unos {d}.', eta_past: 'Ya pasó la fecha estimada. Revisa el estado oficial.', eta_note: 'Es la estimación aproximada de AO3 (de 2 a 4 semanas). Podría volver antes en modo limitado o de solo lectura.', eta_progress: 'Ha pasado el {p}% del tiempo estimado', eta_start: 'Se cayó: {a}', eta_end: 'A más tardar: {a}', d_day: 'día', d_days: 'días', d_h: 'h', d_min: 'min', d_s: 's', d_and: ' y ', author_ao3: 'Perfil de {a} en AO3', by_x: 'Perfil de @{u} en X', eta_from: 'Regreso más temprano', eta_to: 'Regreso más tardío', eta_use: 'Usar estas fechas', eta_owner_sub: 'Actualízalas si AO3 cambia su estimación en otwstatus.org.', l_vetted: 'Leídos por la archivista', selection: 'Selección', follow_btn: '@{u} en X', x_profile: '@{u} en X', ao3_status: 'Estado oficial de AO3', ao3_h: 'Aviso “por mientras”', ao3_sub: 'Quítalo cuando AO3 vuelva. El botón de Wayback se queda en cada folio.', ao3_on: 'Mostrar aviso', ao3_off: 'Ocultar aviso', au_h: 'Autoras que sigo', au_sub: 'Aparecen al final de la biblioteca. Pega el link de su perfil de AO3; si dejas el nombre vacío, lo tomo del link.', au_name: 'Nombre', au_link: 'Link a su perfil de AO3', au_fandom: 'Fandom', au_works: 'Número de fics', au_add: 'Agregar autora', au_save: 'Guardar cambios', au_edit: 'Editar', au_del: 'Quitar', au_need: 'Falta el nombre o un link de AO3 con su usuario.', au_editing: 'Editando a {a}.', meme_h: 'Meme del momento', meme_sub: 'Pega el código para insertar del post (en X: ··· → Insertar post → Copiar código) o solo su link, y aparece arriba, debajo del saludo. Con el código, aunque el navegador de alguien bloquee a X, igual se lee el texto y quién lo publicó.', meme_lbl: 'Código para insertar o link del post', meme_set: 'Ponerlo', meme_clear: 'Quitarlo', meme_bad: 'Eso no parece un link ni un código de un post de X.', meme_open: 'Ver el post en X', open: 'Abrir', details: 'Ver folio', bm_add: 'Marcar', bm_on: 'Marcado', edit: 'Editar', remove: 'Quitar', confirm_rm: '¿Quitar este folio?', yes_rm: 'Sí, quitar', no: 'No', copied: 'Copiado',
+      copyx: 'Copiar para X', read_ao3: 'Leer en AO3', wb: 'Buscar en Wayback', ats: 'Buscar en archive.today', nav_peek: 'Adelanto', pk_kicker: 'Adelanto', pk_teaser: 'Lee un adelanto de {f}', pk_cap_card: 'Capítulo', pk_prof_card: 'Perfil', pk_read: 'Romper el sello', pk_again: 'Volver a leer', pk_seeprof: 'Ver perfil', pk_back: 'Volver al adelanto', pk_draft_short: 'Borrador', ad_prof_h: 'Perfil (segunda tarjeta)', ad_pnom: 'Nombre', ad_ptit: 'Título', ad_pdat: 'Datos: uno por línea, “Clave: valor”', ad_ptxt: 'Texto del perfil', pk_hello: 'Happy reading! We survived the AO3 shutdown… mostly sane', pk_in_en: 'escrito en inglés', pk_in_es: 'escrito en español', pk_draft: 'Borrador: puede cambiar antes de publicarse', pk_more: 'To be continued…', pk_note_by: 'Nota de la autora', pk_prev: 'Lee los capítulos anteriores', pk_x: 'Si quieres platicar de la historia, ando por X:', pk_hidden: 'Solo tú ves esta página: el adelanto está oculto. Revísalo y muéstralo a la comunidad desde Escriba.', pk_hidden_p: 'El perfil está oculto: solo tú lo ves. La comunidad solo ve el capítulo.', pk_hidden_c: 'El capítulo está oculto: solo tú lo ves. La comunidad solo ve el perfil.', pk_hidden_one: 'Solo tú ves esto: está oculto para la comunidad.', pk_edit: 'Editar en Escriba', ad_h: 'Adelanto de tu fic', ad_sub_off: 'Oculto: solo tú lo ves. Revisa el texto, aplica tus cambios y, cuando esté listo, muéstralo a la comunidad y guarda.', ad_sub_on: 'Visible para todos en la pestaña Adelanto.', ad_fic: 'Fic', ad_cap: 'Capítulo', ad_link: 'Link a tu fic en AO3 (opcional)', ad_lang: 'Idioma del texto', ad_draft: 'Mostrar la etiqueta de borrador', ad_note: 'Nota para quienes lean (opcional)', ad_text: 'Texto del adelanto', ad_help: 'Cada línea es un párrafo. *cursiva*, **negrita** y --- en su propia línea para una línea horizontal.', ad_apply: 'Aplicar cambios', ad_view: 'Ver cómo se ve', ad_show: 'Mostrar el capítulo', ad_hide: 'Ocultar el capítulo', ad_pshow: 'Mostrar el perfil', ad_phide: 'Ocultar el perfil', ad_vis: 'visible para todos', ad_hid: 'oculto', ad_state: 'Capítulo: {c} · Perfil: {p}.', m_ad: 'Adelanto actualizado. Falta guardar.', fh: 'Descargar el fic completo con FicHub (EPUB funciona mejor)', read_in: 'Leer en', ao3_down_h: 'Un archivo por mientras', ao3_down: 'AO3 está caído desde el 29 de octubre por un incidente de seguridad. Este archivo es de todes: mientras vuelve, aquí juntamos nuestras recs, y cada folio trae botones para leer: “FicHub” descarga el fic completo (EPUB es lo que mejor funciona; está muy cargado, ten paciencia), y “Wayback” o “archive.today” buscan una copia guardada, aunque no todos los fics tienen copia y archive.today a veces pide resolver un captcha.', follow_line: 'Lo cuido yo, @{u}; sígueme en X para novedades.', eta_h: 'Regreso estimado de AO3', eta_range: 'Entre el {a} y el {b}', eta_until: 'Faltan aprox. {d} para la fecha más temprana.', eta_window: 'Ya estamos en el rango: puede volver en cualquier momento. A más tardar en unos {d}.', eta_past: 'Ya pasó la fecha estimada. Revisa el estado oficial.', eta_note: 'Es la estimación aproximada de AO3 (de 2 a 4 semanas). Podría volver antes en modo limitado o de solo lectura.', eta_progress: 'Ha pasado el {p}% del tiempo estimado', eta_start: 'Se cayó: {a}', eta_end: 'A más tardar: {a}', d_day: 'día', d_days: 'días', d_h: 'h', d_min: 'min', d_s: 's', d_and: ' y ', author_ao3: 'Perfil de {a} en AO3', by_x: 'Perfil de @{u} en X', eta_from: 'Regreso más temprano', eta_to: 'Regreso más tardío', eta_use: 'Usar estas fechas', eta_owner_sub: 'Actualízalas si AO3 cambia su estimación en otwstatus.org.', l_vetted: 'Leídos por la archivista', selection: 'Selección', follow_btn: '@{u} en X', x_profile: '@{u} en X', ao3_status: 'Estado oficial de AO3', ao3_h: 'Aviso “por mientras”', ao3_sub: 'Quítalo cuando AO3 vuelva. El botón de Wayback se queda en cada folio.', ao3_on: 'Mostrar aviso', ao3_off: 'Ocultar aviso', pk_t_capitulo: 'Capítulo', pk_t_perfil: 'Perfil', pk_t_mundo: 'Worldbuilding', pk_tp_capitulo: 'Capítulos', pk_tp_perfil: 'Perfiles', pk_tp_mundo: 'Worldbuilding', pk_f_type: 'Tipo de carta', pk_f_capl: 'Capítulo', pk_f_all: 'Todo', pk_f_allcaps: 'Todos los capítulos', pk_f_cap: 'Cap. {n}', pk_new_frag: 'Nuevo fragmento', pk_frag: 'Fragmento {n}', pk_frags_n: '{n} fragmentos', pk_frags_1: '1 fragmento', pk_none: 'No hay cartas con ese filtro.', pk_full: 'Leer el capítulo completo en AO3', ca_h: 'Cartas del sneak peek', ca_sub: 'Cada carta se edita por separado. Las de capítulo crecen por fragmentos: cuando publicas uno nuevo, la carta se vuelve a sellar para quien ya la había leído. Las cartas nuevas empiezan ocultas.', ca_type: 'Tipo', ca_new: 'Nueva carta', ca_edit: 'Editar', ca_show: 'Mostrar', ca_hide: 'Ocultar', ca_del: 'Quitar', ca_del_q: '¿Quitar? Toca otra vez', ca_vis: 'visible', ca_hid: 'oculta', ca_none: 'Todavía no hay cartas.', ca_editing: 'Editando: {t}', ca_save: 'Guardar carta', ca_close: 'Cerrar', ca_capn: 'Número de capítulo', ca_title_cap: 'Título del capítulo', ca_fin: 'Capítulo terminado (ya no habrá más fragmentos)', ca_title: 'Título', ca_name: 'Nombre', ca_role: 'Título o rol', ca_sub2: 'Subtítulo (opcional)', ca_capopt: 'Capítulo relacionado (opcional)', ca_text: 'Texto', ca_need: 'Ponle un título (o número de capítulo) a la carta.', fr_h: 'Fragmentos', fr_none: 'Todavía no hay fragmentos.', fr_new: 'Nuevo fragmento', fr_editing: 'Editando el fragmento {n}', fr_add: 'Agregar fragmento', fr_save: 'Guardar fragmento', fr_words: '{n} palabras', au_h: 'Autoras que sigo', au_sub: 'Aparecen al final de la biblioteca. Pega el link de su perfil de AO3; si dejas el nombre vacío, lo tomo del link.', au_name: 'Nombre', au_link: 'Link a su perfil de AO3', au_fandom: 'Fandom', au_works: 'Número de fics', au_add: 'Agregar autora', au_save: 'Guardar cambios', au_edit: 'Editar', au_del: 'Quitar', au_need: 'Falta el nombre o un link de AO3 con su usuario.', au_editing: 'Editando a {a}.', meme_h: 'Meme del momento', meme_sub: 'Pega el código para insertar del post (en X: ··· → Insertar post → Copiar código) o solo su link, y aparece arriba, debajo del saludo. Con el código, aunque el navegador de alguien bloquee a X, igual se lee el texto y quién lo publicó.', meme_lbl: 'Código para insertar o link del post', meme_set: 'Ponerlo', meme_clear: 'Quitarlo', meme_bad: 'Eso no parece un link ni un código de un post de X.', meme_open: 'Ver el post en X', open: 'Abrir', details: 'Ver folio', bm_add: 'Marcar', bm_on: 'Marcado', edit: 'Editar', remove: 'Quitar', confirm_rm: '¿Quitar este folio?', yes_rm: 'Sí, quitar', no: 'No', copied: 'Copiado',
       r_G: 'General', r_T: 'Teen', r_M: 'Mature', r_E: 'Explicit', 'r_?': 'Sin clasificar',
       'st_Completed': 'Completo', 'st_In Progress': 'En progreso', 'st_Paused': 'En pausa', 'st_Dropped': 'Abandonado',
       'm_Favorite': 'Favorito', 'm_Read': 'Leído', 'm_Reading': 'Leyendo', 'm_To read': 'Por leer', 'm_Dropped': 'Lo dejé',
@@ -82,7 +84,7 @@
       authors_h: 'Authors I follow', authors_sub: 'If you liked one of their folios, the rest of their work is worth it.', fics_n: '{n} fics',
       fol: 'Fol.', by: 'by', m_fandom: 'Fandom', m_ship: 'Ship', m_len: 'Length', m_status: 'Status', cap: 'ch.', caps: 'chs.',
       about: 'What it’s about', why: 'Why they recommend it', why_by: 'Why @{u} recommends it', note: 'Archivist’s note', rec_by: 'Rec from @{u}', inscribed: 'Inscribed {d}',
-      copyx: 'Copy for X', read_ao3: 'Read on AO3', wb: 'Find on Wayback', ats: 'Find on archive.today', nav_peek: 'Sneak peek', pk_kicker: 'Sneak peek', pk_teaser: 'Read a sneak peek of {f}', pk_cap_card: 'Chapter', pk_prof_card: 'Profile', pk_read: 'Break the seal', pk_again: 'Read it again', pk_seeprof: 'See profile', pk_back: 'Back to the sneak peek', pk_draft_short: 'Draft', ad_prof_h: 'Profile (second card)', ad_pnom: 'Name', ad_ptit: 'Title', ad_pdat: 'Facts: one per line, “Label: value”', ad_ptxt: 'Profile text', pk_hello: 'Happy reading! We survived the AO3 shutdown… mostly sane', pk_in_en: 'written in English', pk_in_es: 'written in Spanish', pk_draft: 'Draft: it may change before it’s published', pk_more: 'To be continued…', pk_note_by: 'A note from the author', pk_prev: 'Read the earlier chapters', pk_x: 'If you want to talk about the story, I’m around on X:', pk_hidden: 'Only you can see this page: the sneak peek is hidden. Review it and show it to the community from Scribe.', pk_hidden_p: 'The profile is hidden: only you can see it. The community only sees the chapter.', pk_hidden_c: 'The chapter is hidden: only you can see it. The community only sees the profile.', pk_hidden_one: 'Only you can see this: it’s hidden from the community.', pk_edit: 'Edit in Scribe', ad_h: 'Sneak peek of your fic', ad_sub_off: 'Hidden: only you can see it. Review the text, apply your changes and, when it’s ready, show it to the community and save.', ad_sub_on: 'Visible to everyone in the Sneak peek tab.', ad_fic: 'Fic', ad_cap: 'Chapter', ad_link: 'Link to your fic on AO3 (optional)', ad_lang: 'Language of the text', ad_draft: 'Show the draft label', ad_note: 'Note for readers (optional)', ad_text: 'Sneak peek text', ad_help: 'Each line is a paragraph. *italics*, **bold**, and --- on its own line for a horizontal line.', ad_apply: 'Apply changes', ad_view: 'Preview it', ad_show: 'Show the chapter', ad_hide: 'Hide the chapter', ad_pshow: 'Show the profile', ad_phide: 'Hide the profile', ad_vis: 'visible to everyone', ad_hid: 'hidden', ad_state: 'Chapter: {c} · Profile: {p}.', m_ad: 'Sneak peek updated. Remember to save.', fh: 'Download the whole fic with FicHub (EPUB works best)', read_in: 'Read on', ao3_down_h: 'A stopgap archive', ao3_down: 'AO3 has been down since October 29 because of a security incident. This archive belongs to all of us: while it’s down, we gather our recs here, and each folio has buttons to read: “FicHub” downloads the whole fic (EPUB works best; it’s under heavy load, so be patient), and “Wayback” or “archive.today” look for a saved copy, though not every fic has one and archive.today sometimes asks you to solve a captcha.', follow_line: 'It’s kept by me, @{u}; follow me on X for news.', eta_h: 'AO3 estimated return', eta_range: 'Between {a} and {b}', eta_until: 'About {d} until the earliest estimate.', eta_window: 'We are inside the window: it could come back any time. At the latest in about {d}.', eta_past: 'The estimated date has passed. Check the official status.', eta_note: 'This is AO3’s rough estimate (2 to 4 weeks). It may come back earlier in a limited or read-only mode.', eta_progress: '{p}% of the estimated time has passed', eta_start: 'Went down: {a}', eta_end: 'At the latest: {a}', d_day: 'day', d_days: 'days', d_h: 'h', d_min: 'min', d_s: 's', d_and: ', ', author_ao3: '{a}’s AO3 profile', by_x: '@{u} on X', eta_from: 'Earliest return', eta_to: 'Latest return', eta_use: 'Use these dates', eta_owner_sub: 'Update them if AO3 changes its estimate on otwstatus.org.', l_vetted: 'Read by the archivist', selection: 'Selection', follow_btn: '@{u} on X', x_profile: '@{u} on X', ao3_status: 'Official AO3 status', ao3_h: 'Stopgap notice', ao3_sub: 'Turn it off when AO3 is back. The Wayback button stays on every folio.', ao3_on: 'Show notice', ao3_off: 'Hide notice', au_h: 'Authors I follow', au_sub: 'They show up at the end of the library. Paste the link to their AO3 profile; if you leave the name empty, I take it from the link.', au_name: 'Name', au_link: 'Link to their AO3 profile', au_fandom: 'Fandom', au_works: 'Number of fics', au_add: 'Add author', au_save: 'Save changes', au_edit: 'Edit', au_del: 'Remove', au_need: 'The name is missing, or an AO3 link with their username.', au_editing: 'Editing {a}.', meme_h: 'Meme of the moment', meme_sub: 'Paste the post’s embed code (on X: ··· → Embed post → Copy code) or just its link, and it shows up top, under the greeting. With the code, even if someone’s browser blocks X, they still see the text and who posted it.', meme_lbl: 'Embed code or link to the post', meme_set: 'Show it', meme_clear: 'Take it down', meme_bad: 'That doesn’t look like a link or embed code for a post on X.', meme_open: 'See the post on X', open: 'Open', details: 'View folio', bm_add: 'Bookmark', bm_on: 'Bookmarked', edit: 'Edit', remove: 'Remove', confirm_rm: 'Remove this folio?', yes_rm: 'Yes, remove', no: 'No', copied: 'Copied',
+      copyx: 'Copy for X', read_ao3: 'Read on AO3', wb: 'Find on Wayback', ats: 'Find on archive.today', nav_peek: 'Sneak peek', pk_kicker: 'Sneak peek', pk_teaser: 'Read a sneak peek of {f}', pk_cap_card: 'Chapter', pk_prof_card: 'Profile', pk_read: 'Break the seal', pk_again: 'Read it again', pk_seeprof: 'See profile', pk_back: 'Back to the sneak peek', pk_draft_short: 'Draft', ad_prof_h: 'Profile (second card)', ad_pnom: 'Name', ad_ptit: 'Title', ad_pdat: 'Facts: one per line, “Label: value”', ad_ptxt: 'Profile text', pk_hello: 'Happy reading! We survived the AO3 shutdown… mostly sane', pk_in_en: 'written in English', pk_in_es: 'written in Spanish', pk_draft: 'Draft: it may change before it’s published', pk_more: 'To be continued…', pk_note_by: 'A note from the author', pk_prev: 'Read the earlier chapters', pk_x: 'If you want to talk about the story, I’m around on X:', pk_hidden: 'Only you can see this page: the sneak peek is hidden. Review it and show it to the community from Scribe.', pk_hidden_p: 'The profile is hidden: only you can see it. The community only sees the chapter.', pk_hidden_c: 'The chapter is hidden: only you can see it. The community only sees the profile.', pk_hidden_one: 'Only you can see this: it’s hidden from the community.', pk_edit: 'Edit in Scribe', ad_h: 'Sneak peek of your fic', ad_sub_off: 'Hidden: only you can see it. Review the text, apply your changes and, when it’s ready, show it to the community and save.', ad_sub_on: 'Visible to everyone in the Sneak peek tab.', ad_fic: 'Fic', ad_cap: 'Chapter', ad_link: 'Link to your fic on AO3 (optional)', ad_lang: 'Language of the text', ad_draft: 'Show the draft label', ad_note: 'Note for readers (optional)', ad_text: 'Sneak peek text', ad_help: 'Each line is a paragraph. *italics*, **bold**, and --- on its own line for a horizontal line.', ad_apply: 'Apply changes', ad_view: 'Preview it', ad_show: 'Show the chapter', ad_hide: 'Hide the chapter', ad_pshow: 'Show the profile', ad_phide: 'Hide the profile', ad_vis: 'visible to everyone', ad_hid: 'hidden', ad_state: 'Chapter: {c} · Profile: {p}.', m_ad: 'Sneak peek updated. Remember to save.', fh: 'Download the whole fic with FicHub (EPUB works best)', read_in: 'Read on', ao3_down_h: 'A stopgap archive', ao3_down: 'AO3 has been down since October 29 because of a security incident. This archive belongs to all of us: while it’s down, we gather our recs here, and each folio has buttons to read: “FicHub” downloads the whole fic (EPUB works best; it’s under heavy load, so be patient), and “Wayback” or “archive.today” look for a saved copy, though not every fic has one and archive.today sometimes asks you to solve a captcha.', follow_line: 'It’s kept by me, @{u}; follow me on X for news.', eta_h: 'AO3 estimated return', eta_range: 'Between {a} and {b}', eta_until: 'About {d} until the earliest estimate.', eta_window: 'We are inside the window: it could come back any time. At the latest in about {d}.', eta_past: 'The estimated date has passed. Check the official status.', eta_note: 'This is AO3’s rough estimate (2 to 4 weeks). It may come back earlier in a limited or read-only mode.', eta_progress: '{p}% of the estimated time has passed', eta_start: 'Went down: {a}', eta_end: 'At the latest: {a}', d_day: 'day', d_days: 'days', d_h: 'h', d_min: 'min', d_s: 's', d_and: ', ', author_ao3: '{a}’s AO3 profile', by_x: '@{u} on X', eta_from: 'Earliest return', eta_to: 'Latest return', eta_use: 'Use these dates', eta_owner_sub: 'Update them if AO3 changes its estimate on otwstatus.org.', l_vetted: 'Read by the archivist', selection: 'Selection', follow_btn: '@{u} on X', x_profile: '@{u} on X', ao3_status: 'Official AO3 status', ao3_h: 'Stopgap notice', ao3_sub: 'Turn it off when AO3 is back. The Wayback button stays on every folio.', ao3_on: 'Show notice', ao3_off: 'Hide notice', pk_t_capitulo: 'Chapter', pk_t_perfil: 'Profile', pk_t_mundo: 'Worldbuilding', pk_tp_capitulo: 'Chapters', pk_tp_perfil: 'Profiles', pk_tp_mundo: 'Worldbuilding', pk_f_type: 'Letter type', pk_f_capl: 'Chapter', pk_f_all: 'All', pk_f_allcaps: 'All chapters', pk_f_cap: 'Ch. {n}', pk_new_frag: 'New fragment', pk_frag: 'Fragment {n}', pk_frags_n: '{n} fragments', pk_frags_1: '1 fragment', pk_none: 'No letters match that filter.', pk_full: 'Read the full chapter on AO3', ca_h: 'Sneak peek letters', ca_sub: 'Each letter is edited on its own. Chapter letters grow by fragments: when you publish a new one, the letter is sealed again for anyone who had read it. New letters start hidden.', ca_type: 'Type', ca_new: 'New letter', ca_edit: 'Edit', ca_show: 'Show', ca_hide: 'Hide', ca_del: 'Remove', ca_del_q: 'Remove? Tap again', ca_vis: 'visible', ca_hid: 'hidden', ca_none: 'No letters yet.', ca_editing: 'Editing: {t}', ca_save: 'Save letter', ca_close: 'Close', ca_capn: 'Chapter number', ca_title_cap: 'Chapter title', ca_fin: 'Chapter finished (no more fragments)', ca_title: 'Title', ca_name: 'Name', ca_role: 'Title or role', ca_sub2: 'Subtitle (optional)', ca_capopt: 'Related chapter (optional)', ca_text: 'Text', ca_need: 'Give the letter a title (or a chapter number).', fr_h: 'Fragments', fr_none: 'No fragments yet.', fr_new: 'New fragment', fr_editing: 'Editing fragment {n}', fr_add: 'Add fragment', fr_save: 'Save fragment', fr_words: '{n} words', au_h: 'Authors I follow', au_sub: 'They show up at the end of the library. Paste the link to their AO3 profile; if you leave the name empty, I take it from the link.', au_name: 'Name', au_link: 'Link to their AO3 profile', au_fandom: 'Fandom', au_works: 'Number of fics', au_add: 'Add author', au_save: 'Save changes', au_edit: 'Edit', au_del: 'Remove', au_need: 'The name is missing, or an AO3 link with their username.', au_editing: 'Editing {a}.', meme_h: 'Meme of the moment', meme_sub: 'Paste the post’s embed code (on X: ··· → Embed post → Copy code) or just its link, and it shows up top, under the greeting. With the code, even if someone’s browser blocks X, they still see the text and who posted it.', meme_lbl: 'Embed code or link to the post', meme_set: 'Show it', meme_clear: 'Take it down', meme_bad: 'That doesn’t look like a link or embed code for a post on X.', meme_open: 'See the post on X', open: 'Open', details: 'View folio', bm_add: 'Bookmark', bm_on: 'Bookmarked', edit: 'Edit', remove: 'Remove', confirm_rm: 'Remove this folio?', yes_rm: 'Yes, remove', no: 'No', copied: 'Copied',
       r_G: 'General', r_T: 'Teen', r_M: 'Mature', r_E: 'Explicit', 'r_?': 'Not rated',
       'st_Completed': 'Complete', 'st_In Progress': 'In progress', 'st_Paused': 'On hiatus', 'st_Dropped': 'Abandoned',
       'm_Favorite': 'Favorite', 'm_Read': 'Read', 'm_Reading': 'Reading', 'm_To read': 'To read', 'm_Dropped': 'Dropped',
@@ -473,7 +475,7 @@
       tab('indice', t('nav_idx'), '') +
       tab('marcadores', t('nav_bm'), '<span class="count" id="bm-count">' + (bmCount() ? roman(bmCount()) : '') + '</span>') +
       (OWNER ? tab('recomendar', t('nav_rec'), '') : '') +
-      ((OWNER && DATA.adelanto) || peekOn() ? tab('adelanto', t('nav_peek'), '<span class="count" aria-hidden="true">\u2726</span>') : '') +
+      ((OWNER && cartas().length) || peekOn() ? tab('adelanto', t('nav_peek'), '<span class="count" aria-hidden="true">\u2726</span>') : '') +
       (OWNER ? tab('archivista', t('nav_scribe'), DATA.pendientes.length ? '<span class="count">' + roman(DATA.pendientes.length) + '</span>' : '') : '') +
       '</nav>';
     var palName = t('pal_' + PAL);
@@ -548,15 +550,11 @@
     updateSaveBar();
   }
 
-  function chapOn() { var A = DATA.adelanto; return !!(A && A.on && A.texto); }
-  function profOn() { var A = DATA.adelanto, P = A && A.perfil; return !!(P && P.on && P.texto); }
-  function peekOn() { return chapOn() || profOn(); }
   function peekLinkHtml() {
     if (!peekOn()) return '';
-    var A = DATA.adelanto;
     // already on the sneak peek tab: the link keeps its space (so the tabs don't jump) but isn't shown
     var here = view === 'adelanto';
-    return '<a class="teaser-link' + (here ? ' is-here" aria-hidden="true" tabindex="-1' : '') + '" href="#adelanto"><span class="st" aria-hidden="true">✦</span>' + esc(t('pk_teaser', { f: A.fic || '' })) + ' <span aria-hidden="true">→</span></a>';
+    return '<a class="teaser-link' + (here ? ' is-here" aria-hidden="true" tabindex="-1' : '') + '" href="#adelanto"><span class="st" aria-hidden="true">✦</span>' + esc(t('pk_teaser', { f: peekFic() })) + ' <span aria-hidden="true">→</span></a>';
   }
   function proseHtml(txt) {
     // a small, safe subset of Markdown: every line is a paragraph, *italics*, **bold**, --- for a horizontal line, # for a subheading
@@ -577,10 +575,6 @@
     var w = String(txt || '').replace(/\*\*[^*]*\*\*\s*/g, '').replace(/[*_#]/g, '').replace(/^-{3,}$/gm, '').split(/\s+/).filter(Boolean);
     return w.slice(0, n).join(' ') + (w.length > n ? '…' : '');
   }
-  function sealMark(A) { var m = /\d+/.exec(A.cap || ''); return m ? roman(+m[0]) : '\u2726'; }
-  var OPENED = loadJSON('archivo-fanfics-cartas', {});
-  function letterKey(kind, A, P) { return kind + ':' + (kind === 'capitulo' ? (A.cap || '') : ((P || {}).nombre || '')); }
-  function letterAttrs(kind, key) { return OPENED[key] ? ' letter opened" href="#adelanto/' + kind + '"' : ' letter" href="#adelanto/' + kind + '" data-act="break-seal" data-seal="' + esc(key) + '"'; }
   function scribbleSvg(seed) {
     // illegible handwriting: rows of looped strokes, a red flourish for the initial and a signature
     var n = (seed || 1) * 7919 % 233280;
@@ -632,61 +626,133 @@
     return rows ? '<dl class="meta peek-facts">' + rows + '</dl>' : '';
   }
   function capTitle(x) { var sp = splitTitle(x); return '<span class="initial" aria-hidden="true">' + esc(sp.cap) + '</span><h3 class="title"><span class="sr">' + esc(x) + '</span><span aria-hidden="true">' + esc(sp.rest) + '</span></h3>'; }
-  function renderAdelanto() {
-    var p = document.getElementById('panel'), A = DATA.adelanto || {}, P = A.perfil || {};
-    var hc = !!(A.texto && !A.on), hp = !!(P.texto && !P.on);
-    function ownerNote(k) { return OWNER ? '<p class="peek-owner">' + esc(t(k)) + ' <a href="#archivista">' + esc(t('pk_edit')) + '</a></p>' : ''; }
-    if (peekItem === 'capitulo' && A.texto && (OWNER || A.on)) return renderPeekChapter(p, A, hc ? ownerNote('pk_hidden_one') : '');
-    if (peekItem === 'perfil' && P.texto && (OWNER || P.on)) return renderPeekProfile(p, A, P, hp ? ownerNote('pk_hidden_one') : '');
-    var hidden = hc || hp ? ownerNote(hc && hp ? 'pk_hidden' : hc ? 'pk_hidden_c' : 'pk_hidden_p') : '';
-    var tag = '<span class="hid-tag">' + esc(t('hid_tag')) + '</span>';
-    var cards = '';
-    var kc = letterKey('capitulo', A), kp = letterKey('perfil', A, P);
-    if (A.texto && (OWNER || A.on)) cards += '<a class="folio peek-card cs-3' + (hc ? ' is-hidden' : '') + letterAttrs('capitulo', kc) + '>' +
-      '<div class="folio-head"><span class="folno">' + esc(t('pk_cap_card')) + '</span><span class="mine">' + esc(A.fic || '') + '</span></div>' +
-      envelopeHtml(sealMark(A), 7) +
-      '<div class="folio-body"><h3 class="letter-title">' + esc(A.cap || t('pk_cap_card')) + '</h3></div>' +
-      '<div class="folio-foot"><div class="foot-l">' + (A.borrador ? '<span class="inscr">' + esc(t('pk_draft_short')) + '</span>' : '') + (hc ? tag : '') + '</div><div class="actions"><span class="btn-small">' + esc(t(OPENED[kc] ? 'pk_again' : 'pk_read')) + ' →</span></div></div></a>';
-    if (P.texto && (OWNER || P.on)) cards += '<a class="folio peek-card cs-6' + (hp ? ' is-hidden' : '') + letterAttrs('perfil', kp) + '>' +
-      '<div class="folio-head"><span class="folno">' + esc(t('pk_prof_card')) + '</span><span class="mine">' + esc(A.fic || '') + '</span></div>' +
-      envelopeHtml(((P.nombre || '').trim().split(/\s+/).pop() || '\u2726').charAt(0).toUpperCase(), 3) +
-      '<div class="folio-body"><h3 class="letter-title">' + esc(P.nombre || t('pk_prof_card')) + '</h3>' + (P.titulo ? '<p class="letter-sub">' + esc(P.titulo) + '</p>' : '') + '</div>' +
-      '<div class="folio-foot"><div class="foot-l">' + (hp ? tag : '') + '</div><div class="actions"><span class="btn-small">' + esc(t(OPENED[kp] ? 'pk_again' : 'pk_read')) + ' →</span></div></div></a>';
-    p.innerHTML = hidden + '<div class="peek-intro"><h2>' + esc(t('nav_peek')) + (A.fic ? ' · ' + esc(A.fic) : '') + '</h2></div>' +
-      '<div class="grid peek-grid">' + cards + '</div>';
+  /* ---------- cartas del sneak peek: cada una se edita por separado; los capítulos crecen por fragmentos ---------- */
+  var CTYPES = ['capitulo', 'perfil', 'mundo'];
+  function cuid(p) { return p + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); }
+  function cartas() { return DATA.cartas || (DATA.cartas = []); }
+  function cartaById(id) { return cartas().filter(function (c) { return c.id === id; })[0] || null; }
+  function visFrags(c) { return (c.frags || []).filter(function (f) { return f.on !== false && String(f.texto || '').trim(); }); }
+  function cartaVisible(c) { return !!(c && c.on && (c.tipo === 'capitulo' ? visFrags(c).length : String(c.texto || '').trim())); }
+  function cartaHasContent(c) { return c.tipo === 'capitulo' ? (c.frags || []).some(function (f) { return String(f.texto || '').trim(); }) : !!String(c.texto || '').trim(); }
+  function shownCartas() { return cartas().filter(function (c) { return OWNER ? true : cartaVisible(c); }); }
+  function peekOn() { return cartas().some(cartaVisible); }
+  function peekFic() { var c = cartas().filter(cartaVisible)[0] || cartas()[0]; return (c && c.fic) || 'Medieval MiChaeng'; }
+  function capLabel(c) { var es = (c.lang || LANG) === 'es'; return (c.cap ? (es ? 'Capítulo ' : 'Chapter ') + c.cap : '') + (c.titulo ? (c.cap ? ' — ' : '') + '“' + c.titulo + '”' : ''); }
+  function cartaTitle(c) { return c.tipo === 'capitulo' ? capLabel(c) || t('pk_t_capitulo') : (c.titulo || t('pk_t_' + c.tipo)); }
+  function sealMark(c) {
+    if (c.tipo === 'capitulo') return c.cap ? roman(+c.cap) : '✦';
+    var w = String(c.titulo || '').trim().split(/\s+/);
+    return ((c.tipo === 'perfil' ? w.pop() : w[0]) || '✦').charAt(0).toUpperCase() || '✦';
   }
-  function readerEnd(A, me, link) {
-    return '<div class="row">' + (link ? '<a class="btn-ghost" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(t('pk_prev')) + ' ↗</a>' : '') +
+  var OPENED = loadJSON('archivo-fanfics-cartas', {});
+  function letterKey(c) { if (c.tipo !== 'capitulo') return c.id; var vf = visFrags(c), last = vf[vf.length - 1]; return c.id + ':' + (last ? last.id : ''); }
+  function readOlder(c) { var k = letterKey(c), pre = c.id + ':'; return c.tipo === 'capitulo' && !OPENED[k] && Object.keys(OPENED).some(function (x) { return x !== k && x.indexOf(pre) === 0; }); }
+  function letterAttrs(c) {
+    var key = letterKey(c), href = '#adelanto/' + encodeURIComponent(c.id);
+    if (OPENED[key]) return ' letter opened" href="' + href + '"';
+    var vf = visFrags(c), jump = readOlder(c) && vf.length > 1 ? vf[vf.length - 1].id : '';
+    return ' letter" href="' + href + '" data-act="break-seal" data-seal="' + esc(key) + '"' + (jump ? ' data-jump="' + esc(jump) + '"' : '');
+  }
+  var peekType = '', peekCap = '', peekJump = '';
+  function migrateAdelanto(d) {
+    // the old single sneak peek (one chapter + one profile) becomes two letters
+    var A = d.adelanto; delete d.adelanto;
+    if (Array.isArray(d.cartas) || !A || typeof A !== 'object') return;
+    d.cartas = [];
+    if (String(A.texto || '').trim()) {
+      var m = /\d+/.exec(A.cap || ''), tit = String(A.cap || '').replace(/^\s*(chapter|cap[ií]tulo|cap\.?|ch\.?)\s*\d+\s*[—–:\-.]?\s*/i, '').replace(/^[“"']+|[”"']+$/g, '').trim();
+      d.cartas.push({ id: 'c-cap' + (m ? m[0] : ''), tipo: 'capitulo', on: !!A.on, fic: A.fic || 'Medieval MiChaeng', cap: m ? +m[0] : '', titulo: tit, lang: A.lang === 'es' ? 'es' : 'en',
+        borrador: !!A.borrador, link: A.link || '', nota: A.nota || '', fin: false, frags: [{ id: 'f1', on: true, fecha: '', texto: A.texto }] });
+    }
+    var P = A.perfil || {};
+    if (String(P.texto || '').trim()) d.cartas.push({ id: 'c-perfil-' + String(P.nombre || 'perfil').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, ''), tipo: 'perfil', on: !!P.on,
+      fic: A.fic || 'Medieval MiChaeng', cap: '', titulo: P.nombre || '', sub: P.titulo || '', datos: P.datos || '', texto: P.texto, lang: A.lang === 'es' ? 'es' : 'en' });
+  }
+  function renderAdelanto() {
+    var p = document.getElementById('panel'), all = shownCartas();
+    var cur = peekItem ? cartaById(peekItem) : null;
+    if (cur && (OWNER || cartaVisible(cur))) {
+      var note = OWNER && !cartaVisible(cur) ? '<p class="peek-owner">' + esc(t('pk_hidden_one')) + ' <a href="#archivista">' + esc(t('pk_edit')) + '</a></p>' : '';
+      return cur.tipo === 'capitulo' ? renderPeekChapter(p, cur, note) : renderPeekProfile(p, cur, note);
+    }
+    // the newest chapter first, then everything else by chapter
+    var order = { capitulo: 0, perfil: 1, mundo: 2 };
+    all = all.slice().sort(function (a, b) { return (+b.cap || 0) - (+a.cap || 0) || order[a.tipo] - order[b.tipo]; });
+    var types = CTYPES.filter(function (x) { return all.some(function (c) { return c.tipo === x; }); });
+    var caps = all.map(function (c) { return +c.cap || 0; }).filter(function (n, i, a) { return n && a.indexOf(n) === i; }).sort(function (a, b) { return a - b; });
+    if (peekType && types.indexOf(peekType) < 0) peekType = '';
+    if (peekCap && caps.indexOf(+peekCap) < 0) peekCap = '';
+    function chip(act, v, label, on) { return '<button type="button" class="chip" data-act="' + act + '" data-v="' + esc(v) + '" aria-pressed="' + on + '">' + esc(label) + '</button>'; }
+    var filters = '';
+    if (types.length > 1) filters += '<div class="chips" role="group" aria-label="' + esc(t('pk_f_type')) + '">' + chip('pk-type', '', t('pk_f_all'), !peekType) + types.map(function (x) { return chip('pk-type', x, t('pk_tp_' + x), peekType === x); }).join('') + '</div>';
+    if (caps.length > 1) filters += '<div class="chips" role="group" aria-label="' + esc(t('pk_f_capl')) + '">' + chip('pk-cap', '', t('pk_f_allcaps'), !peekCap) + caps.map(function (n) { return chip('pk-cap', String(n), t('pk_f_cap', { n: roman(n) }), +peekCap === n); }).join('') + '</div>';
+    var list = all.filter(function (c) { return (!peekType || c.tipo === peekType) && (!peekCap || +c.cap === +peekCap); });
+    var tag = '<span class="hid-tag">' + esc(t('hid_tag')) + '</span>';
+    var cards = list.map(function (c, i) {
+      var hidden = !cartaVisible(c), vf = visFrags(c), fresh = readOlder(c);
+      var head = c.tipo === 'capitulo' ? t('pk_t_capitulo') + (c.cap ? ' ' + roman(+c.cap) : '') : t('pk_t_' + c.tipo);
+      var side = c.tipo !== 'capitulo' && c.cap ? t('pk_f_cap', { n: roman(+c.cap) }) : (c.fic || '');
+      var title = c.tipo === 'capitulo' ? (c.titulo || capLabel(c)) : c.titulo;
+      var sub = c.tipo === 'capitulo' ? (vf.length > 1 ? t('pk_frags_n', { n: vf.length }) : '') : (c.sub || '');
+      return '<a class="folio peek-card cs-' + (c.tipo === 'capitulo' ? 3 : c.tipo === 'perfil' ? 6 : 4) + (hidden ? ' is-hidden' : '') + letterAttrs(c) + '>' +
+        (fresh ? '<span class="new-frag">' + esc(t('pk_new_frag')) + '</span>' : '') +
+        '<div class="folio-head"><span class="folno">' + esc(head) + '</span><span class="mine">' + esc(side) + '</span></div>' +
+        envelopeHtml(sealMark(c), (i + 3) * 7) +
+        '<div class="folio-body"><h3 class="letter-title">' + esc(title || '') + '</h3>' + (sub ? '<p class="letter-sub">' + esc(sub) + '</p>' : '') + '</div>' +
+        '<div class="folio-foot"><div class="foot-l">' + (c.tipo === 'capitulo' && c.borrador ? '<span class="inscr">' + esc(t('pk_draft_short')) + '</span>' : '') + (hidden ? tag : '') + '</div>' +
+        '<div class="actions"><span class="btn-small">' + esc(t(OPENED[letterKey(c)] ? 'pk_again' : 'pk_read')) + ' →</span></div></div></a>';
+    }).join('');
+    var fics = all.map(function (c) { return c.fic; }).filter(function (f, i, a) { return f && a.indexOf(f) === i; });
+    p.innerHTML = '<div class="peek-intro"><h2>' + esc(t('nav_peek')) + (fics.length === 1 ? ' · ' + esc(fics[0]) : '') + '</h2></div>' +
+      (filters ? '<div class="peek-filters">' + filters + '</div>' : '') +
+      (cards ? '<div class="grid peek-grid">' + cards + '</div>' : '<p class="empty">' + esc(t('pk_none')) + '</p>');
+  }
+  function readerEnd(c, me, link, full) {
+    return '<div class="row">' + (link ? '<a class="btn-ghost" href="' + esc(link) + '" target="_blank" rel="noopener noreferrer">' + esc(t(full ? 'pk_full' : 'pk_prev')) + ' ↗</a>' : '') +
       '</div>' + (me ? '<p class="reader-x">' + esc(t('pk_x')) + ' <a href="https://x.com/' + esc(me) + '" target="_blank" rel="noopener noreferrer">@' + esc(me) + '</a></p>' : '') +
       '<a class="back-link" href="#adelanto">← ' + esc(t('pk_back')) + '</a>';
   }
-  function renderPeekChapter(p, A, hidden) {
-    var me = xHandle(), link = safeUrl(A.link);
-    var otherLang = A.lang && A.lang !== LANG ? t(A.lang === 'en' ? 'pk_in_en' : 'pk_in_es') : '';
+  function fragDate(d) { var x = /^(\d{4})-(\d{2})-(\d{2})/.exec(d || ''); return x ? fmtDay(new Date(+x[1], +x[2] - 1, +x[3]).getTime()) : ''; }
+  function renderPeekChapter(p, c, hidden) {
+    var me = xHandle(), link = safeUrl(c.link), frs = OWNER ? (c.frags || []).filter(function (f) { return String(f.texto || '').trim(); }) : visFrags(c);
+    var otherLang = c.lang && c.lang !== LANG ? t(c.lang === 'en' ? 'pk_in_en' : 'pk_in_es') : '';
+    var many = frs.length > 1;
+    var idx = many ? '<nav class="frag-index" aria-label="' + esc(t('fr_h')) + '">' + frs.map(function (f, i) {
+      return '<button type="button" class="chip" data-act="pk-frag" data-v="' + esc(f.id) + '">' + esc(t('pk_frag', { n: roman(i + 1) })) + '</button>';
+    }).join('') + '</nav>' : '';
+    var body = frs.map(function (f, i) {
+      var d = fragDate(f.fecha), off = f.on === false;
+      return (many ? '<div class="frag-head" id="frag-' + esc(f.id) + '"><span>' + esc(t('pk_frag', { n: roman(i + 1) })) + (d ? ' · ' + esc(d) : '') + '</span>' + (off ? ' <span class="hid-tag">' + esc(t('hid_tag')) + '</span>' : '') + '</div>' : '') +
+        '<div class="reader-body' + (off ? ' is-hidden' : '') + '"' + (c.lang ? ' lang="' + esc(c.lang) + '"' : '') + '>' + proseHtml(f.texto) + '</div>';
+    }).join('<p class="fleuron frag-sep" aria-hidden="true">❦</p>');
     p.innerHTML = hidden + '<div id="read-prog" aria-hidden="true"></div>' +
       '<article class="reader" aria-labelledby="pk-title"><a class="back-link top" href="#adelanto">← ' + esc(t('pk_back')) + '</a>' +
-        '<header class="reader-head"><p class="reader-kicker">' + esc(t('pk_kicker')) + (A.fic ? ' · ' + esc(A.fic) : '') + '</p>' +
-          '<h2 class="reader-title" id="pk-title">' + esc(A.cap || '') + '</h2>' +
+        '<header class="reader-head"><p class="reader-kicker">' + esc(t('pk_kicker')) + (c.fic ? ' · ' + esc(c.fic) : '') + '</p>' +
+          '<h2 class="reader-title" id="pk-title">' + esc(capLabel(c)) + '</h2>' +
           '<p class="reader-hello">' + esc(t('pk_hello')) + '</p>' + (otherLang ? '<p class="reader-meta">' + esc(otherLang) + '</p>' : '') +
-          (A.borrador ? '<p class="draft-tag">' + esc(t('pk_draft')) + '</p>' : '') +
-          '<p class="fleuron" aria-hidden="true">❦</p></header>' +
-        '<div class="reader-body"' + (A.lang ? ' lang="' + esc(A.lang) + '"' : '') + '>' + proseHtml(A.texto) + '</div>' +
-        '<footer class="reader-end"><p class="fleuron" aria-hidden="true">❦</p><p class="more">' + esc(t('pk_more')) + '</p>' +
-          (A.nota ? '<div class="reader-note"><b>' + esc(t('pk_note_by')) + '</b><p>' + esc(A.nota) + '</p></div>' : '') + readerEnd(A, me, link) + '</footer>' +
+          (c.borrador ? '<p class="draft-tag">' + esc(t('pk_draft')) + '</p>' : '') + idx +
+          '<p class="fleuron" aria-hidden="true">❦</p></header>' + body +
+        '<footer class="reader-end"><p class="fleuron" aria-hidden="true">❦</p>' + (c.fin ? '' : '<p class="more">' + esc(t('pk_more')) + '</p>') +
+          (c.nota ? '<div class="reader-note"><b>' + esc(t('pk_note_by')) + '</b><p>' + esc(c.nota) + '</p></div>' : '') + readerEnd(c, me, link, c.fin) + '</footer>' +
       '</article>';
     readProgress();
   }
-  function renderPeekProfile(p, A, P, hidden) {
-    var me = xHandle(), link = safeUrl(A.link);
+  function jumpToFrag() {
+    if (!peekJump) return;
+    var el = document.getElementById('frag-' + peekJump); peekJump = '';
+    if (el) window.scrollTo(0, el.getBoundingClientRect().top + window.scrollY - 24);
+  }
+  function renderPeekProfile(p, c, hidden) {
+    var me = xHandle(), link = safeUrl(c.link);
     p.innerHTML = hidden + '<div id="read-prog" aria-hidden="true"></div>' +
       '<article class="reader reader-profile" aria-labelledby="pk-title"><a class="back-link top" href="#adelanto">← ' + esc(t('pk_back')) + '</a>' +
-        '<header class="reader-head"><p class="reader-kicker">' + esc(t('pk_prof_card')) + (A.fic ? ' · ' + esc(A.fic) : '') + '</p>' +
-          '<h2 class="reader-title" id="pk-title">' + esc(P.nombre || '') + '</h2>' +
-          (P.titulo ? '<p class="reader-hello">' + esc(P.titulo) + '</p>' : '') +
+        '<header class="reader-head"><p class="reader-kicker">' + esc(t('pk_t_' + c.tipo)) + (c.cap ? ' · ' + esc(t('pk_f_cap', { n: roman(+c.cap) })) : '') + (c.fic ? ' · ' + esc(c.fic) : '') + '</p>' +
+          '<h2 class="reader-title" id="pk-title">' + esc(c.titulo || '') + '</h2>' +
+          (c.sub ? '<p class="reader-hello">' + esc(c.sub) + '</p>' : '') +
           '<p class="fleuron" aria-hidden="true">❦</p></header>' +
-        peekFacts(P.datos) +
-        '<div class="reader-body"' + (A.lang ? ' lang="' + esc(A.lang) + '"' : '') + '>' + proseHtml(P.texto) + '</div>' +
-        '<footer class="reader-end"><p class="fleuron" aria-hidden="true">❦</p>' + readerEnd(A, me, link) + '</footer>' +
+        peekFacts(c.datos) +
+        '<div class="reader-body"' + (c.lang ? ' lang="' + esc(c.lang) + '"' : '') + '>' + proseHtml(c.texto) + '</div>' +
+        '<footer class="reader-end"><p class="fleuron" aria-hidden="true">❦</p>' + readerEnd(c, me, link) + '</footer>' +
       '</article>';
     readProgress();
   }
@@ -917,6 +983,70 @@
       '<div class="row"><button type="button" class="btn" data-act="au-add">' + esc(t(ed ? 'au_save' : 'au_add')) + '</button>' +
       (ed ? '<button type="button" class="btn-ghost" data-act="au-cancel">' + esc(t('cancel')) + '</button>' : '') + '</div><p id="au-msg" class="err" hidden></p></section>';
   }
+  // Escriba: the list of letters, and an editor that shows only the fields of the letter being edited
+  var cEdit = null, cDel = null, fEdit = null;
+  function cartasBoxHtml() {
+    var L = cartas(), ed = cEdit ? cartaById(cEdit) : null;
+    function row(c) {
+      var vf = (c.frags || []).filter(function (f) { return String(f.texto || '').trim(); }).length;
+      var info = [t('pk_t_' + c.tipo), c.tipo === 'capitulo' ? (vf === 1 ? t('pk_frags_1') : t('pk_frags_n', { n: vf })) : (c.cap ? t('pk_f_cap', { n: roman(+c.cap) }) : ''), t(cartaVisible(c) ? 'ca_vis' : 'ca_hid')].filter(Boolean).join(' · ');
+      return '<li' + (ed && ed.id === c.id ? ' class="editing"' : '') + '><span><b>' + esc(cartaTitle(c)) + '</b> <span class="hint">· ' + esc(info) + '</span></span><span class="actions">' +
+        '<button type="button" class="btn-small" data-act="ca-edit" data-id="' + esc(c.id) + '">' + esc(t('ca_edit')) + '</button>' +
+        '<button type="button" class="btn-small" data-act="ca-toggle" data-id="' + esc(c.id) + '">' + esc(t(c.on ? 'ca_hide' : 'ca_show')) + '</button>' +
+        (cDel === c.id ? '<button type="button" class="btn-small danger" data-act="ca-del" data-id="' + esc(c.id) + '">' + esc(t('ca_del_q')) + '</button>'
+          : '<button type="button" class="btn-small danger" data-act="ca-del" data-id="' + esc(c.id) + '">' + esc(t('ca_del')) + '</button>') + '</span></li>';
+    }
+    var list = L.length ? '<ul class="pend cartas-list">' + L.map(row).join('') + '</ul>' : '<p class="sub">' + esc(t('ca_none')) + '</p>';
+    var add = '<div class="row"><div class="field"><label for="nc-tipo">' + esc(t('ca_type')) + '</label><select id="nc-tipo">' + CTYPES.map(function (x) { return '<option value="' + x + '">' + esc(t('pk_t_' + x)) + '</option>'; }).join('') + '</select></div>' +
+      '<button type="button" class="btn-ghost" data-act="ca-new" style="align-self:flex-end">' + esc(t('ca_new')) + '</button></div>';
+    return '<section class="box" id="cartas-box" aria-labelledby="ca-h"><h2 id="ca-h">' + esc(t('ca_h')) + '</h2><p class="sub">' + esc(t('ca_sub')) + '</p>' + list + add + (ed ? cartaEditorHtml(ed) : '') + '</section>';
+  }
+  function cartaEditorHtml(c) {
+    function inp(k, label, v, type, full) { return '<div class="field' + (full ? ' full' : '') + '"><label for="ce-' + k + '">' + esc(label) + '</label><input type="' + (type || 'text') + '" id="ce-' + k + '" value="' + esc(v == null ? '' : v) + '"></div>'; }
+    function area(k, label, v, rows, help) { return '<div class="field full"><label for="ce-' + k + '">' + esc(label) + '</label><textarea id="ce-' + k + '" rows="' + rows + '">' + esc(v || '') + '</textarea>' + (help ? '<p class="sub" style="margin:4px 0 0">' + esc(help) + '</p>' : '') + '</div>'; }
+    var lang = '<div class="field"><label for="ce-lang">' + esc(t('ad_lang')) + '</label><select id="ce-lang"><option value="en"' + (c.lang !== 'es' ? ' selected' : '') + '>English</option><option value="es"' + (c.lang === 'es' ? ' selected' : '') + '>Español</option></select></div>';
+    var f = '';
+    if (c.tipo === 'capitulo') {
+      f = inp('fic', t('ad_fic'), c.fic) + inp('cap', t('ca_capn'), c.cap, 'number') + inp('titulo', t('ca_title_cap'), c.titulo) + lang + inp('link', t('ad_link'), c.link, 'url') +
+        '<label class="check" style="align-self:end"><input type="checkbox" id="ce-borrador"' + (c.borrador ? ' checked' : '') + '> ' + esc(t('ad_draft')) + '</label>' +
+        '<label class="check" style="align-self:end"><input type="checkbox" id="ce-fin"' + (c.fin ? ' checked' : '') + '> ' + esc(t('ca_fin')) + '</label>' +
+        area('nota', t('ad_note'), c.nota, 2);
+    } else {
+      f = inp('titulo', t(c.tipo === 'perfil' ? 'ca_name' : 'ca_title'), c.titulo) + inp('sub', t(c.tipo === 'perfil' ? 'ca_role' : 'ca_sub2'), c.sub) +
+        inp('fic', t('ad_fic'), c.fic) + inp('cap', t('ca_capopt'), c.cap, 'number') + lang +
+        area('datos', t('ad_pdat'), c.datos, 4) + area('texto', t('ca_text'), c.texto, 12, t('ad_help'));
+    }
+    var frags = '';
+    if (c.tipo === 'capitulo') {
+      var fr = c.frags || [], fe = fEdit ? fr.filter(function (x) { return x.id === fEdit; })[0] : null;
+      frags = '<h3 class="ad-sub">' + esc(t('fr_h')) + '</h3>' + (fr.length ? '<ul class="pend">' + fr.map(function (x, i) {
+        var words = String(x.texto || '').split(/\s+/).filter(Boolean).length, d = fragDate(x.fecha);
+        return '<li' + (fe && fe.id === x.id ? ' class="editing"' : '') + '><span><b>' + esc(t('pk_frag', { n: roman(i + 1) })) + '</b> <span class="hint">· ' + esc([d, t('fr_words', { n: words }), t(x.on === false ? 'ca_hid' : 'ca_vis')].filter(Boolean).join(' · ')) + '</span></span><span class="actions">' +
+          '<button type="button" class="btn-small" data-act="fr-edit" data-id="' + esc(x.id) + '">' + esc(t('ca_edit')) + '</button>' +
+          '<button type="button" class="btn-small" data-act="fr-toggle" data-id="' + esc(x.id) + '">' + esc(t(x.on === false ? 'ca_show' : 'ca_hide')) + '</button>' +
+          '<button type="button" class="btn-small danger" data-act="fr-del" data-id="' + esc(x.id) + '">' + esc(t(cDel === 'f:' + x.id ? 'ca_del_q' : 'ca_del')) + '</button></span></li>';
+      }).join('') + '</ul>' : '<p class="sub">' + esc(t('fr_none')) + '</p>') +
+        '<div class="field full"><label for="fr-texto">' + esc(fe ? t('fr_editing', { n: roman(fr.indexOf(fe) + 1) }) : t('fr_new')) + '</label><textarea id="fr-texto" rows="12">' + esc(fe ? fe.texto : '') + '</textarea>' +
+        '<p class="sub" style="margin:4px 0 0">' + esc(t('ad_help')) + '</p></div>' +
+        '<div class="row"><button type="button" class="btn" data-act="fr-add">' + esc(t(fe ? 'fr_save' : 'fr_add')) + '</button>' + (fe ? '<button type="button" class="btn-ghost" data-act="fr-cancel">' + esc(t('cancel')) + '</button>' : '') + '</div>';
+    }
+    return '<div class="carta-editor"><h3 class="ad-sub">' + esc(t('ca_editing', { t: cartaTitle(c) })) + '</h3><div class="form-grid">' + f + '</div>' +
+      '<div class="row"><button type="button" class="btn" data-act="ca-save">' + esc(t('ca_save')) + '</button><button type="button" class="btn-ghost" data-act="ca-view">' + esc(t('ad_view')) + '</button>' +
+      '<button type="button" class="btn-ghost" data-act="ca-close">' + esc(t('ca_close')) + '</button></div><p id="ca-msg" class="err" hidden></p>' + frags + '</div>';
+  }
+  function applyCarta() {
+    // copies whatever is in the editor's fields into the letter; true if something changed
+    var c = cEdit ? cartaById(cEdit) : null;
+    if (!c || !document.getElementById('ce-titulo')) return false;
+    var before = JSON.stringify(c);
+    function v(k) { var el = document.getElementById('ce-' + k); return el ? String(el.value || '') : null; }
+    function ck(k) { var el = document.getElementById('ce-' + k); return el ? !!el.checked : false; }
+    var capv = parseInt(v('cap'), 10);
+    c.titulo = v('titulo').trim(); c.fic = v('fic').trim(); c.cap = capv > 0 ? capv : ''; c.lang = v('lang') === 'es' ? 'es' : 'en';
+    if (c.tipo === 'capitulo') { c.link = v('link').trim(); c.borrador = ck('borrador'); c.fin = ck('fin'); c.nota = v('nota').trim(); }
+    else { c.sub = v('sub').trim(); c.datos = v('datos').trim(); c.texto = v('texto').replace(/\s+$/, ''); }
+    return JSON.stringify(c) !== before;
+  }
   function renderArchivista() {
     var p = document.getElementById('panel');
     var ed = editingId ? byId(editingId) : null;
@@ -926,21 +1056,7 @@
         '<div class="row" style="margin-top:8px">' + (it.added ? '<p class="okmsg">' + esc(t('added')) + '</p>' : it.dup ? '<p class="err">' + esc(t('dup')) + '</p>' :
           '<button type="button" class="btn-small" data-act="imp-add" data-i="' + i + '">' + esc(t('add_to')) + '</button>') + '</div></div>';
     }).join('');
-    var A = DATA.adelanto || { fic: '', cap: '', esc: '', lang: 'en', borrador: true, link: '', nota: '', texto: '' };
-    function adIn(k, label, v, type) { return '<div class="field"><label for="ad-' + k + '">' + esc(label) + '</label><input type="' + (type || 'text') + '" id="ad-' + k + '" value="' + esc(v || '') + '"></div>'; }
-    var PP = A.perfil || {}, vis = function (on) { return t(on ? 'ad_vis' : 'ad_hid'); };
-    var peekBox = '<section class="box" aria-labelledby="ad-h"><h2 id="ad-h">' + esc(t('ad_h')) + '</h2><p class="sub">' + esc(A.on || PP.on ? t('ad_state', { c: vis(A.on), p: vis(PP.on) }) : t('ad_sub_off')) + '</p>' +
-        '<div class="form-grid">' + adIn('fic', t('ad_fic'), A.fic) + adIn('cap', t('ad_cap'), A.cap) + adIn('link', t('ad_link'), A.link, 'url') +
-        '<div class="field"><label for="ad-lang">' + esc(t('ad_lang')) + '</label><select id="ad-lang"><option value="en"' + (A.lang !== 'es' ? ' selected' : '') + '>English</option><option value="es"' + (A.lang === 'es' ? ' selected' : '') + '>Español</option></select></div>' +
-        '<label class="check" style="align-self:end"><input type="checkbox" id="ad-draft"' + (A.borrador ? ' checked' : '') + '> ' + esc(t('ad_draft')) + '</label>' +
-        '<div class="field full"><label for="ad-nota">' + esc(t('ad_note')) + '</label><textarea id="ad-nota" rows="2">' + esc(A.nota || '') + '</textarea></div>' +
-        '<div class="field full"><label for="ad-texto">' + esc(t('ad_text')) + '</label><textarea id="ad-texto" rows="16">' + esc(A.texto || '') + '</textarea><p class="sub" style="margin:4px 0 0">' + esc(t('ad_help')) + '</p></div>' +
-        '<h3 class="ad-sub full">' + esc(t('ad_prof_h')) + '</h3>' + adIn('pnom', t('ad_pnom'), (A.perfil || {}).nombre) + adIn('ptit', t('ad_ptit'), (A.perfil || {}).titulo) +
-        '<div class="field full"><label for="ad-pdat">' + esc(t('ad_pdat')) + '</label><textarea id="ad-pdat" rows="4">' + esc((A.perfil || {}).datos || '') + '</textarea></div>' +
-        '<div class="field full"><label for="ad-ptxt">' + esc(t('ad_ptxt')) + '</label><textarea id="ad-ptxt" rows="8">' + esc((A.perfil || {}).texto || '') + '</textarea></div></div>' +
-        '<div class="row"><button type="button" class="btn-ghost" data-act="ad-apply">' + esc(t('ad_apply')) + '</button><button type="button" class="btn-ghost" data-act="ad-view">' + esc(t('ad_view')) + '</button>' +
-        '<button type="button" class="' + (A.on ? 'btn-ghost' : 'btn') + '" data-act="ad-toggle">' + esc(A.on ? t('ad_hide') : t('ad_show')) + '</button>' +
-        '<button type="button" class="' + (PP.on ? 'btn-ghost' : 'btn') + '" data-act="ad-ptoggle">' + esc(PP.on ? t('ad_phide') : t('ad_pshow')) + '</button></div></section>';
+    var peekBox = cartasBoxHtml();
     p.innerHTML = peekBox +
       '<section class="box" aria-labelledby="imp-h"><h2 id="imp-h">' + esc(t('imp_h')) + '</h2><p class="sub">' + esc(t('imp_sub')) + '</p>' +
         '<textarea id="imp" rows="5" placeholder="' + esc(t('imp_ph')) + '"></textarea>' +
@@ -1024,7 +1140,9 @@
     if (h.indexOf('fic-') === 0 && shown(byId(h.slice(4)))) { detailId = h.slice(4); return; }
     detailId = null; detailPick = false;
     view = (VIEWS.indexOf(h) >= 0 && (h !== 'archivista' || OWNER) && (h !== 'recomendar' || OWNER) && (h !== 'adelanto' || OWNER || peekOn())) ? h : (h ? 'archivo' : view);
-    peekItem = view === 'adelanto' && (sub === 'capitulo' || sub === 'perfil') ? sub : '';
+    try { sub = decodeURIComponent(sub); } catch (e) {}
+    peekItem = view === 'adelanto' ? sub : '';
+    if (peekItem === 'capitulo' || peekItem === 'perfil') { var lc = cartas().filter(function (c) { return c.tipo === peekItem && (OWNER || cartaVisible(c)); })[0]; peekItem = lc ? lc.id : ''; }
   }
   function openDetail(id, pick) { detailPick = !!pick; if (location.hash === '#fic-' + id) { detailId = id; renderDetail(); } else location.hash = 'fic-' + id; }
   function closeDetail() { location.hash = view; }
@@ -1033,10 +1151,11 @@
   window.addEventListener('hashchange', function () {
     var prevView = view, prevDetail = detailId, prevItem = peekItem;
     route();
-    if (view !== prevView) { confirmDel = null; renderShell(); restoring = true; var pn = document.getElementById('panel'); window.scrollTo(0, view === 'adelanto' && pn ? pn.getBoundingClientRect().top + window.scrollY - 24 : wantY); requestAnimationFrame(function () { requestAnimationFrame(function () { restoring = false; }); }); }
+    if (view !== prevView) { confirmDel = null; renderShell(); restoring = true; var pn = document.getElementById('panel'); window.scrollTo(0, view === 'adelanto' && pn ? pn.getBoundingClientRect().top + window.scrollY - 24 : wantY); jumpToFrag(); requestAnimationFrame(function () { requestAnimationFrame(function () { restoring = false; }); }); }
     else if (peekItem !== prevItem) {
       renderView();
       var pk = document.getElementById('panel'); if (pk) window.scrollTo(0, pk.getBoundingClientRect().top + window.scrollY - 24);
+      jumpToFrag();
     }
     else if (detailId !== prevDetail) renderDetail();
   });
@@ -1110,11 +1229,15 @@
     else if (act === 'copyx') { var r = byId(id); if (r) copy(xText(r), b); }
     else if (act === 'break-seal') {
       e.preventDefault();
+      peekJump = b.getAttribute('data-jump') || '';
       var to = (b.getAttribute('href') || '#adelanto').slice(1), go = function () { location.hash = to; };
       var sk = b.getAttribute('data-seal'); if (sk) { OPENED[sk] = 1; store('archivo-fanfics-cartas', JSON.stringify(OPENED)); }
       if (reduced || b.classList.contains('breaking')) { go(); return; }
       b.classList.add('breaking'); setTimeout(go, 1900);
     }
+    else if (act === 'pk-type') { peekType = v || ''; renderView(); }
+    else if (act === 'pk-cap') { peekCap = v || ''; renderView(); }
+    else if (act === 'pk-frag') { peekJump = v || ''; jumpToFrag(); }
     else if (act === 'random') { var list = filtered(); if (list.length) openDetail(list[Math.floor(Math.random() * list.length)].id, true); }
     else if (act === 'clear') { F = { q: '', fandom: '', ship: '', rating: '', mine: '', completos: false, sin18: false, sort: F.sort, tropes: [] }; renderArchivo(); }
     else if (act === 'filters') { filtersOpen = !filtersOpen; var fp = document.getElementById('filters-panel'); if (fp) fp.hidden = !filtersOpen; b.setAttribute('aria-expanded', String(filtersOpen)); var fa = document.getElementById('farrow'); if (fa) fa.textContent = filtersOpen ? '\u25b4' : '\u25be'; }
@@ -1220,20 +1343,64 @@
         if (detailId) renderDetail();
       }
     }
-    else if (act === 'ad-apply' || act === 'ad-view' || act === 'ad-toggle' || act === 'ad-ptoggle') {
-      var before = JSON.stringify(DATA.adelanto || null), A0 = DATA.adelanto || {};
-      if (document.getElementById('ad-texto')) {
-        DATA.adelanto = { on: !!A0.on, fic: val('ad-fic').trim(), cap: val('ad-cap').trim(), lang: val('ad-lang') === 'es' ? 'es' : 'en',
-          borrador: !!(document.getElementById('ad-draft') || {}).checked, link: val('ad-link').trim(), nota: val('ad-nota').trim(), texto: val('ad-texto').replace(/\s+$/, ''),
-          perfil: { on: !!(A0.perfil || {}).on, nombre: val('ad-pnom').trim(), titulo: val('ad-ptit').trim(), datos: val('ad-pdat').trim(), texto: val('ad-ptxt').replace(/\s+$/, '') } };
-      }
-      if (act === 'ad-toggle' && DATA.adelanto) DATA.adelanto.on = !DATA.adelanto.on;
-      if (act === 'ad-ptoggle' && DATA.adelanto) { DATA.adelanto.perfil = DATA.adelanto.perfil || {}; DATA.adelanto.perfil.on = !DATA.adelanto.perfil.on; }
-      if (JSON.stringify(DATA.adelanto || null) !== before) { touch(); say(t('m_ad')); }
-      if (act === 'ad-view') location.hash = 'adelanto';
-      else renderShell();
+    else if (act === 'ca-new') {
+      if (applyCarta()) touch();
+      var tp = (document.getElementById('nc-tipo') || {}).value || 'capitulo';
+      var nc = { id: cuid('c'), tipo: CTYPES.indexOf(tp) >= 0 ? tp : 'capitulo', on: false, fic: peekFic(), cap: '', titulo: '', lang: 'en' };
+      if (nc.tipo === 'capitulo') { nc.borrador = true; nc.link = ''; nc.nota = ''; nc.fin = false; nc.frags = []; } else { nc.sub = ''; nc.datos = ''; nc.texto = ''; }
+      cartas().push(nc); cEdit = nc.id; fEdit = null; cDel = null; touch(); renderShell();
+      var ne = document.querySelector('.carta-editor'); if (ne) ne.scrollIntoView({ block: 'start' });
+      var nf = document.getElementById(nc.tipo === 'capitulo' ? 'ce-cap' : 'ce-titulo'); if (nf) nf.focus({ preventScroll: true });
     }
-    else if (act === 'discard') { DATA = parseData(ORIGINAL); dirty = 0; saveErr = ''; editingId = null; catalogLink = null; importList = []; renderShell(); }
+    else if (act === 'ca-edit') {
+      if (applyCarta()) touch();
+      cEdit = cEdit === id ? null : id; fEdit = null; cDel = null; renderArchivista();
+      var ee = document.querySelector('.carta-editor'); if (ee) ee.scrollIntoView({ block: 'start' });
+    }
+    else if (act === 'ca-toggle') { if (applyCarta()) touch(); var ct = cartaById(id); if (ct) { ct.on = !ct.on; touch(); } cDel = null; renderShell(); }
+    else if (act === 'ca-del') {
+      if (cDel !== id) { cDel = id; renderArchivista(); return; }
+      DATA.cartas = cartas().filter(function (c) { return c.id !== id; });
+      if (cEdit === id) { cEdit = null; fEdit = null; }
+      cDel = null; touch(); renderShell();
+    }
+    else if (act === 'ca-save') {
+      var chg = applyCarta(), cs = cartaById(cEdit), cm = document.getElementById('ca-msg');
+      if (cs && !cs.titulo && !(cs.tipo === 'capitulo' && cs.cap)) { if (cm) { cm.textContent = t('ca_need'); cm.hidden = false; } return; }
+      if (chg) touch();
+      renderShell(); say(t('m_ad'));
+    }
+    else if (act === 'ca-view') { if (applyCarta()) touch(); if (cEdit) location.hash = 'adelanto/' + encodeURIComponent(cEdit); }
+    else if (act === 'ca-close') { if (applyCarta()) touch(); cEdit = null; fEdit = null; cDel = null; renderShell(); }
+    else if (act === 'fr-add') {
+      if (applyCarta()) touch();
+      var cf = cartaById(cEdit), ftxt = ((document.getElementById('fr-texto') || {}).value || '').replace(/\s+$/, '');
+      if (!cf || !ftxt.trim()) return;
+      cf.frags = cf.frags || [];
+      var fe = fEdit ? cf.frags.filter(function (x) { return x.id === fEdit; })[0] : null;
+      if (fe) fe.texto = ftxt; else cf.frags.push({ id: cuid('f'), on: true, fecha: today(), texto: ftxt });
+      fEdit = null; cDel = null; touch(); renderArchivista();
+      var fl = document.getElementById('fr-texto'); if (fl) fl.scrollIntoView({ block: 'nearest' });
+    }
+    else if (act === 'fr-edit') {
+      if (applyCarta()) touch();
+      fEdit = id; cDel = null; renderArchivista();
+      var ft = document.getElementById('fr-texto'); if (ft) { ft.scrollIntoView({ block: 'center' }); ft.focus({ preventScroll: true }); }
+    }
+    else if (act === 'fr-cancel') { fEdit = null; renderArchivista(); }
+    else if (act === 'fr-toggle') {
+      if (applyCarta()) touch();
+      var cf2 = cartaById(cEdit), fx = cf2 ? (cf2.frags || []).filter(function (x) { return x.id === id; })[0] : null;
+      if (fx) { fx.on = fx.on === false; touch(); }
+      cDel = null; renderArchivista();
+    }
+    else if (act === 'fr-del') {
+      if (cDel !== 'f:' + id) { cDel = 'f:' + id; renderArchivista(); return; }
+      var cf3 = cartaById(cEdit); if (cf3) cf3.frags = (cf3.frags || []).filter(function (x) { return x.id !== id; });
+      if (fEdit === id) fEdit = null;
+      cDel = null; touch(); renderArchivista();
+    }
+    else if (act === 'discard') { DATA = parseData(ORIGINAL); dirty = 0; saveErr = ''; editingId = null; catalogLink = null; importList = []; cEdit = null; fEdit = null; cDel = null; renderShell(); }
     else if (act === 'err-ok') { saveErr = ''; saveOk = ''; updateSaveBar(); }
   });
 
@@ -1635,11 +1802,11 @@
     var P = JSON.parse(JSON.stringify(D));
     P.recs = (P.recs || []).filter(function (r) { return !r.h; });
     P.pendientes = [];
-    var A = P.adelanto;
-    if (A) {
-      if (!A.on) { A.texto = ''; A.nota = ''; }
-      if (A.perfil && !A.perfil.on) A.perfil = { on: false };
-    }
+    delete P.adelanto;
+    P.cartas = (P.cartas || []).filter(cartaVisible).map(function (c) {
+      if (c.tipo === 'capitulo') c.frags = (c.frags || []).filter(function (f) { return f.on !== false && String(f.texto || '').trim(); });
+      return c;
+    });
     return P;
   }
   function ghSiteUrl() {
