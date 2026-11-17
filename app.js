@@ -526,7 +526,7 @@
     if (key === memeKey) return;
     memeKey = key;
     if (!id) { root.innerHTML = ''; return; }
-    root.innerHTML = '<figure class="meme"><figcaption class="meme-cap"><span aria-hidden="true">\u2726</span> ' + esc(t('meme_h')) + '</figcaption><div class="meme-frame"><blockquote class="twitter-tweet" data-dnt="true" data-align="center" data-theme="' + (dark ? 'dark' : 'light') + '" data-lang="' + esc(LANG) + '">' +
+    root.innerHTML = '<figure class="meme"><div class="meme-frame"><blockquote class="twitter-tweet" data-dnt="true" data-align="center" data-theme="' + (dark ? 'dark' : 'light') + '" data-lang="' + esc(LANG) + '">' +
       (M.memeText ? '<p lang="' + esc(M.memeLang || 'en') + '" dir="auto">' + esc(M.memeText) + '</p>' : '') +
       (M.memeBy ? '<span class="meme-by">\u2014 ' + esc(M.memeBy) + '</span> ' : '') +
       '<a href="' + esc(safeUrl(M.meme) || ('https://x.com/i/status/' + id)) + '">' + esc(M.memeDate || t('meme_open')) + ' ↗</a></blockquote></div></figure>';
