@@ -485,11 +485,14 @@
         return '<button type="button" class="pal-opt" data-act="pal" data-v="' + p[0] + '" aria-pressed="' + (PAL === p[0]) + '"><span class="swatch" aria-hidden="true" style="background:' + p[1] + '"></span>' + esc(t('pal_' + p[0])) + '</button>';
       }).join('') + '</div></div></div>';
     var title = t('title');
-    if (!document.getElementById('shell-top')) { app.innerHTML = '<div class="wrap"><div id="shell-top"></div><div id="meme-root"></div><div id="shell-rest"></div></div><div id="shell-over"></div>'; memeKey = null; }
-    document.getElementById('shell-top').innerHTML = '<div class="top"><p class="eyebrow">' + esc(eyebrowTxt()) + '</p>' + settings + '</div>' +
-      '<header class="hero"><h1><span class="cap">' + esc(title.charAt(0)) + '</span>' + esc(title.slice(1)) + '</h1>' +
-      '<p class="lede">' + esc(t('lede')) + '</p></header>';
-    document.getElementById('shell-rest').innerHTML = '<div class="hero hero-tail">' + stopgapHtml() + peekLinkHtml() + '<p class="fleuron" aria-hidden="true">❦</p></div>' +
+    if (!document.getElementById('shell-top')) {
+      app.innerHTML = '<div class="wrap"><div id="shell-top"></div><div class="hero-grid" id="hero-grid"><div id="shell-hero"></div><div id="meme-root"></div></div><div id="shell-rest"></div></div><div id="shell-over"></div>';
+      memeKey = null;
+    }
+    document.getElementById('shell-top').innerHTML = '<div class="top"><p class="eyebrow">' + esc(eyebrowTxt()) + '</p>' + settings + '</div>';
+    document.getElementById('shell-hero').innerHTML = '<header class="hero"><h1><span class="cap">' + esc(title.charAt(0)) + '</span>' + esc(title.slice(1)) + '</h1>' +
+      '<p class="lede">' + esc(t('lede')) + '</p>' + peekLinkHtml() + '</header>';
+    document.getElementById('shell-rest').innerHTML = '<div class="hero hero-tail">' + stopgapHtml() + '<p class="fleuron" aria-hidden="true">❦</p></div>' +
       tabs + '<main class="panel" id="panel"></main><div id="savebar"></div><p class="sr" aria-live="polite" id="live"></p>' +
       '<footer class="site-foot">' + ghFootHtml() + '</footer>';
     document.getElementById('shell-over').innerHTML = cvBannerHtml() + ghDialogHtml();
@@ -519,13 +522,14 @@
     var root = document.getElementById('meme-root'); if (!root) return;
     var M = DATA.meta, id = memeId(M.meme), dark = /dark/.test(getComputedStyle(document.documentElement).colorScheme || ''),
       key = id ? [id, dark ? 'd' : 'l', LANG, M.memeText || '', M.memeBy || ''].join('|') : '';
+    var grid = document.getElementById('hero-grid'); if (grid) grid.classList.toggle('has-meme', !!id);
     if (key === memeKey) return;
     memeKey = key;
     if (!id) { root.innerHTML = ''; return; }
-    root.innerHTML = '<figure class="meme"><blockquote class="twitter-tweet" data-dnt="true" data-align="center" data-theme="' + (dark ? 'dark' : 'light') + '" data-lang="' + esc(LANG) + '">' +
+    root.innerHTML = '<figure class="meme"><figcaption class="meme-cap"><span aria-hidden="true">\u2726</span> ' + esc(t('meme_h')) + '</figcaption><div class="meme-frame"><blockquote class="twitter-tweet" data-dnt="true" data-align="center" data-theme="' + (dark ? 'dark' : 'light') + '" data-lang="' + esc(LANG) + '">' +
       (M.memeText ? '<p lang="' + esc(M.memeLang || 'en') + '" dir="auto">' + esc(M.memeText) + '</p>' : '') +
       (M.memeBy ? '<span class="meme-by">\u2014 ' + esc(M.memeBy) + '</span> ' : '') +
-      '<a href="' + esc(safeUrl(M.meme) || ('https://x.com/i/status/' + id)) + '">' + esc(M.memeDate || t('meme_open')) + ' ↗</a></blockquote></figure>';
+      '<a href="' + esc(safeUrl(M.meme) || ('https://x.com/i/status/' + id)) + '">' + esc(M.memeDate || t('meme_open')) + ' ↗</a></blockquote></div></figure>';
     if (window.twttr && window.twttr.widgets) { window.twttr.widgets.load(root); return; }
     if (xLoading) return;
     xLoading = true;

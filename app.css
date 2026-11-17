@@ -426,9 +426,26 @@ table.idx tr.is-hidden td { opacity: .55; }
 .teaser-link .st { color: var(--gold); margin-right: 9px; }
 .teaser-link.is-here { visibility: hidden; }
 .hero-tail { margin-top: 0; }
-.meme { margin: 22px auto 0; max-width: 550px; display: flex; justify-content: center; }
-.meme .twitter-tweet { margin: 0 !important; }
-.meme blockquote.twitter-tweet { width: min(100%, 550px); padding: 14px 18px; border: 1px solid var(--rule); border-radius: 12px; background: color-mix(in srgb, var(--page) 88%, transparent); color: var(--ink); text-align: left; }
+.lede { text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+.hero .teaser-link { margin-left: 0; margin-right: 0; }
+.hero-grid { display: grid; grid-template-columns: minmax(0, 1fr); }
+.hero-grid.has-meme { grid-template-columns: minmax(0, 660px) 272px; justify-content: space-between; column-gap: 40px; align-items: stretch; }
+.hero-grid.has-meme #shell-hero { display: flex; }
+.hero-grid.has-meme .hero { flex: 1 1 auto; display: flex; flex-direction: column; }
+.hero-grid.has-meme .hero .teaser-link { margin-top: auto; padding-top: 18px; }
+.hero-grid.has-meme .lede { max-width: none; }
+.meme { margin: 18px 0 0; width: 272px; max-width: 100%; }
+.meme-cap { margin: 0 0 8px; text-align: center; font-family: var(--sc); font-weight: 600; font-size: 12px; letter-spacing: .14em; color: var(--muted); }
+.meme-cap span { color: var(--gold); }
+.meme-frame { padding: 7px; border: 1px solid var(--rule); border-radius: 18px; background: color-mix(in srgb, var(--page) 70%, transparent); box-shadow: 0 16px 30px -22px var(--shadow); }
+.meme-frame .twitter-tweet { margin: 0 !important; width: 100% !important; max-width: 100% !important; min-width: 0 !important; }
+.meme-frame iframe { display: block; width: 100% !important; max-width: 100% !important; border-radius: 12px !important; overflow: hidden; }
+.meme blockquote.twitter-tweet { box-sizing: border-box; padding: 14px 16px; border: 1px solid var(--rule); border-radius: 12px; background: color-mix(in srgb, var(--page) 88%, transparent); color: var(--ink); text-align: left; }
+@media (max-width: 860px) {
+  .hero-grid.has-meme { grid-template-columns: minmax(0, 1fr); }
+  .hero-grid.has-meme .hero .teaser-link { margin-top: 18px; padding-top: 0; }
+  .hero-grid.has-meme .meme { margin: 24px auto 0; }
+}
 .meme blockquote.twitter-tweet p { margin: 0 0 8px; font-family: var(--body); font-size: 1.15rem; line-height: 1.4; overflow-wrap: anywhere; }
 .meme .meme-by { font-family: var(--sc); font-size: 13px; letter-spacing: .05em; color: var(--muted); }
 .meme blockquote.twitter-tweet a { font-family: var(--sc); font-size: 13px; letter-spacing: .05em; color: var(--ink); }
